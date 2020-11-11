@@ -19,17 +19,17 @@ function gitfrom() {
 	if [ "$1"  = "self" ]
     then
 		URL="${URL}FlavorlessQuark/"
-	elif [ "$1" == "kevin" ]
+	elif [ "$1" = "kevin" ]
 	then	URL="${URL}MrColour/"
-	elif [ "$1" == "next" ]
+	elif [ "$1" = "next" ]
 	then    URL="${URL}42-next/"
-	elif [ "$1" == "dev" ]
+	elif [ "$1" = "dev" ]
 	then    URL="${URL}dev-stdout/"
-	elif [ "$1" == "sig" ]
+	elif [ "$1" = "sig" ]
 	then    URL="${URL}LumenNoctis/"
-	elif [ "$1" == "gd" ]
+	elif [ "$1" = "gd" ]
 	then    URL="${URL}Games-and-dragons/"
-	elif [ "$1" == "42" ]
+	elif [ "$1" = "42" ]
 	then    URL="${URL}42Curriculum/"
     fi
 
