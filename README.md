@@ -1,0 +1,2 @@
+# zsh
+Custom ZSH file
