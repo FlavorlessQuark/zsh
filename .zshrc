@@ -1,4 +1,16 @@
 # Created by newuser for 5.8
+
+#------ Prompt customization ----#
+autoload -U colors && colors
+autoload -Uz vcs_info
+
+precmd(){ vcs_info }
+setopt  PROMPT_SUBST
+
+zstyle ':vcs_info:git:*' formats '%s %b'
+ 
+PROMPT="%F{red}~ C%F{yellow}o%F{green}l%F{cyan}or%F{blue}fu%F{magenta}l ~%F{reset_color} %1 \>"
+
 #------ Git Aliases 0------------#
 function gitall() {
     git add .
@@ -45,3 +57,4 @@ alias ga='git add .'
 alias gcm='git commit -m'
 alias gpl='git pull'
 alias gpu='git push'
+
