@@ -40,7 +40,7 @@ function gitfrom() {
 	elif [ "$1" = "sig" ]
 	then    URL="${URL}LumenNoctis/"
 	elif [ "$1" = "gd" ]
-	then    URL="${URL}Games-and-dragons/"
+	then    URL="${URL}Compute-Progress/"
 	elif [ "$1" = "42" ]
 	then    URL="${URL}42Curriculum/"
     fi
