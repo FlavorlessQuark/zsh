@@ -43,6 +43,8 @@ function gitfrom() {
 	then    URL="${URL}Compute-Progress/"
 	elif [ "$1" = "42" ]
 	then    URL="${URL}42Curriculum/"
+	elif [ "$1" = "wasm" ]
+	then	URL="${URL}Wasync/"
     fi
 
     URL="${URL}"$2""
