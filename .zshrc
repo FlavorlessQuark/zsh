@@ -8,7 +8,7 @@ precmd(){ vcs_info }
 setopt  PROMPT_SUBST
 
 zstyle ':vcs_info:git:*' formats '%s %b'
- 
+
 PROMPT="%F{red}~ C%F{yellow}o%F{green}l%F{cyan}or%F{blue}fu%F{magenta}l ~%F{reset_color} %1 \>"
 
 #------ Git Aliases 0------------#
@@ -26,7 +26,7 @@ function gitall() {
 
 function gitfrom() {
 
-	URL="git clone https://github.com/"
+	URL="git clone github@github.com:"
 
 	if [ "$1"  = "self" ]
     then
