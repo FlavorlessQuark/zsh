@@ -39,7 +39,7 @@ function gitall() {
 
 function gitfrom() {
 
-	URL="git clone github@github.com:"
+	URL="git clone git@github.com:"
 
 	if [ "$1"  = "self" ]
     then
