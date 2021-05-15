@@ -1,19 +1,32 @@
 # Created by newuser for 5.8
 
+TOKEN="None"
+
 #------ Prompt customization ----#
 autoload -U colors && colors
 autoload -Uz vcs_info
 
 precmd(){ vcs_info }
-setopt  PROMPT_SUBST
 
-zstyle ':vcs_info:git:*' formats '%s %b'
 
 PROMPT="%F{red}~ C%F{yellow}o%F{green}l%F{cyan}or%F{blue}fu%F{magenta}l ~%F{reset_color} %1 \>"
 
 #------ Git Aliases 0------------#
+
+function gitcreate() {
+
+	if [ $TOKEN = "None" ]
+	then
+		echo "Enter your personal token; "
+		read -r TOKEN
+	fi
+
+	eval "curl -H \"Authorization: token ${TOKEN}\" https://api.github.com/user/repos -d '{\"name\":\"${1}\",\"private\":false}'"
+
+}
+
 function gitall() {
-    git add .
+	git add .
 	if [ "$1" != "" ]
 	then
 		git commit -m "$1"
