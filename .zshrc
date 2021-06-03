@@ -13,15 +13,35 @@ PROMPT="%F{red}~ C%F{yellow}o%F{green}l%F{cyan}or%F{blue}fu%F{magenta}l ~%F{rese
 
 #------ Git Aliases 0------------#
 
+function settoken(){
+	echo "Enter your personal token; "
+	read -r TOKEN
+}
+
 function gitcreate() {
 
+	if [ "$1" = "self" ]
+	then
+		endpoint="user/repos"
+	else
+		if [ "$1" = "sig" ]
+		then    ORG="LumenNoctis"
+		elif [ "$1" = "cp" ]
+		then    ORG="Compute-Progress"
+		elif [ "$1" = "42" ]
+		then    ORG="42Curriculum"
+		elif [ "$1" = "wasm" ]
+		then	ORG="Wasync/"
+		fi
+		endpoint="orgs/${ORG}/repos"
+	fi
 	if [ $TOKEN = "None" ]
 	then
 		echo "Enter your personal token; "
 		read -r TOKEN
 	fi
 
-	eval "curl -H \"Authorization: token ${TOKEN}\" https://api.github.com/user/repos -d '{\"name\":\"${1}\",\"private\":false}'"
+	eval "curl -H \"Authorization: token ${TOKEN}\" https://api.github.com/${endpoint} -d '{\"name\":\"${2}\",\"private\":false}'"
 
 }
 
@@ -52,7 +72,7 @@ function gitfrom() {
 	then    URL="${URL}dev-stdout/"
 	elif [ "$1" = "sig" ]
 	then    URL="${URL}LumenNoctis/"
-	elif [ "$1" = "gd" ]
+	elif [ "$1" = "cp" ]
 	then    URL="${URL}Compute-Progress/"
 	elif [ "$1" = "42" ]
 	then    URL="${URL}42Curriculum/"
@@ -68,8 +88,7 @@ function gitfrom() {
     eval  ${URL}
 }
 
-alias ga='git add .'
-alias gcm='git commit -m'
-alias gpl='git pull'
-alias gpu='git push'
-
+alias add='git add .'
+alias commit='git commit -m'
+alias pull='git pull'
+alias push='git push'
