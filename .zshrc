@@ -1,7 +1,5 @@
 # Created by newuser for 5.8
 
-TOKEN="None"
-
 #------ Prompt customization ----#
 autoload -U colors && colors
 autoload -Uz vcs_info
@@ -14,34 +12,42 @@ PROMPT="%F{red}~ C%F{yellow}o%F{green}l%F{cyan}or%F{blue}fu%F{magenta}l ~%F{rese
 #------ Git Aliases 0------------#
 
 function settoken(){
-	echo "Enter your personal token; "
+	TOKEN="None"
+
+	echo "Enter your personal token: "
 	read -r TOKEN
+	if [[ $(grep -q PERSONAL_ACCESS_TOKEN= ~/.zshenv) ]]
+	then
+		sed -in "s/^export PERSONAL_ACCESS_TOKEN=.*/export PERSONAL_ACCESS_TOKEN=$TOKEN/" ~/.zshenv
+	else
+		echo "export PERSONAL_ACCESS_TOKEN=$TOKEN" >> ~/.zshenv
+	fi
 }
 
 function gitcreate() {
-
-	if [ "$1" = "self" ]
+	TOKEN=$(env | grep PERSONAL_ACCESS_TOKEN= | cut -d \= -f 2)
+	
+	if [[ $(grep PERSONAL_ACCESS_TOKEN ~/.zshenv) ]]
 	then
-		endpoint="user/repos"
-	else
-		if [ "$1" = "sig" ]
-		then    ORG="LumenNoctis"
-		elif [ "$1" = "cp" ]
-		then    ORG="Compute-Progress"
-		elif [ "$1" = "42" ]
-		then    ORG="42Curriculum"
-		elif [ "$1" = "wasm" ]
-		then	ORG="Wasync/"
+		if [ "$1" = "self" ]
+		then
+			endpoint="user/repos"
+		else
+			if [ "$1" = "sig" ]
+			then    ORG="LumenNoctis"
+			elif [ "$1" = "cp" ]
+			then    ORG="Compute-Progress"
+			elif [ "$1" = "42" ]
+			then    ORG="42Curriculum"
+			elif [ "$1" = "wasm" ]
+			then	ORG="Wasync/"
+			fi
+			endpoint="orgs/${ORG}/repos"
 		fi
-		endpoint="orgs/${ORG}/repos"
+		eval "curl -H \"Authorization: token ${TOKEN}\" https://api.github.com/${endpoint} -d '{\"name\":\"${2}\",\"private\":false}'"
+	else
+		echo "No token found. Please use settoken to set your personal access token"
 	fi
-	if [ $TOKEN = "None" ]
-	then
-		echo "Enter your personal token; "
-		read -r TOKEN
-	fi
-
-	eval "curl -H \"Authorization: token ${TOKEN}\" https://api.github.com/${endpoint} -d '{\"name\":\"${2}\",\"private\":false}'"
 
 }
 
@@ -86,6 +92,15 @@ function gitfrom() {
     fi
 
     eval  ${URL}
+}
+
+function test() {
+	if [[ $(grep PERSONAL_ACCESS_TOKEN ~/.zsh_profile) ]]
+	then echo "NOT HERE"
+	else
+		echo $THISVAR IS OWOW
+	fi
+
 }
 
 alias add='git add .'
