@@ -26,7 +26,7 @@ function settoken(){
 
 function gitcreate() {
 	TOKEN=$(env | grep PERSONAL_ACCESS_TOKEN= | cut -d \= -f 2)
-	
+
 	if [[ $(grep PERSONAL_ACCESS_TOKEN ~/.zshenv) ]]
 	then
 		if [ "$1" = "self" ]
@@ -84,6 +84,8 @@ function gitfrom() {
 	then    URL="${URL}42Curriculum/"
 	elif [ "$1" = "wasm" ]
 	then	URL="${URL}Wasync/"
+	elif [ "$1" = "recbox" ]
+	then	URL="${URL}RecBox-Games/"
     fi
 
     URL="${URL}"$2""
@@ -103,7 +105,34 @@ function test() {
 
 }
 
+function run_pm() {
+	pad_serv
+	cd  /home/jjosephi/projects/recbox/potion_masters/
+	node client/node/index.js &
+	code client && code console
+	cd console
+}
+
+function controller() {
+	# Start server, run node in bg, code server, client, cd to console
+	webcp
+	cd  /home/jjosephi/projects/recbox/controller_boilerplate
+	code .
+}
+
 alias add='git add .'
 alias commit='git commit -m'
 alias pull='git pull'
 alias push='git push'
+alias gkill='/home/jjosephi/scripts/grep_kill'
+alias pad_serv='/home/jjosephi/projects/recbox/WSCPServ/target/debug/server &'
+alias webcp='node /home/jjosephi/projects/recbox/WebCP/index.js &'
+alias localhost='firefox localhost:3000'
+
+export MOZ_ENABLE_WAYLAND=1
+source "/home/jjosephi/emsdk/emsdk_env.sh"
+
+# Created by `pipx` on 2023-03-29 17:57:42
+alias docker_prompt='sudo docker run --rm -it --entrypoint /bin/bash  debian:11'
+alias ino_compile='arduino-cli compile --fqbn arduino:avr:uno '
+alias ino_upload='arduino-cli upload -p /dev/ttyUSB0 --fqbn arduino:avr:uno  '
